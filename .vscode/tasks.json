@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/TriviaApi.csproj"
+                "${workspaceFolder}/src/TriviaApi.csproj"
             ],
             "problemMatcher": "$msCompile"
         }
