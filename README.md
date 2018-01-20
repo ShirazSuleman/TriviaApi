@@ -8,4 +8,4 @@
   1. ```dotnet restore```
   2. ```dotnet build```
   3. ```dotnet run```
-* Browse to (**Base URL**)`/swagger` to view the relevant endpoints.
+* Browse to {**Base URL**}/swagger (e.g. http://localhost:5000/swagger) to view the relevant endpoints.

@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace TriviaApi
 {
-    [Route("api/[controller]")]
+    [Route("api/games")]
     public class GamesController : Controller
     {
         private readonly IGamesRepository _gamesRepository;
@@ -48,8 +48,8 @@ namespace TriviaApi
             return _createResponse(HttpStatusCode.OK, data: _parseGameStatus(_gamesRepository.GetGameInformation(game.Id)));
         }
 
-        [HttpPost("{gameId}/submitAnswer")]
-        public IActionResult SubmitAnswer([FromRoute] long gameId, [FromBody] SubmitAnswerRequest request)
+        [HttpPost("{gameId}/gameQuestions/{gameQuestionId}")]
+        public IActionResult SubmitAnswer([FromRoute] long gameId, [FromRoute] long gameQuestionId, [FromBody] SubmitAnswerRequest request)
         {
             if (!ModelState.IsValid)
                 return _createResponse(HttpStatusCode.BadRequest, "Invalid request.");
@@ -60,7 +60,7 @@ namespace TriviaApi
                 return _createResponse(HttpStatusCode.NotFound, "Invalid game id.");
             }
 
-            var gameQuestion = _gamesRepository.GetGameQuestion(gameId, request.GameQuestionId);
+            var gameQuestion = _gamesRepository.GetGameQuestion(gameId, gameQuestionId);
             if (gameQuestion == null)
             {
                 return _createResponse(HttpStatusCode.NotFound, "Invalid game question id.");
@@ -71,12 +71,12 @@ namespace TriviaApi
                 return _createResponse(HttpStatusCode.BadRequest, "Question already answered.");
             }
 
-            if (!_gamesRepository.ValidateAnswerToQuestion(request.AnswerId, request.GameQuestionId))
+            if (!_gamesRepository.ValidateAnswerToQuestion(request.AnswerId, gameQuestionId))
             {
                 return _createResponse(HttpStatusCode.BadRequest, "Invalid answer id for the question.");
             }
 
-            _gamesRepository.SubmitAnswer(gameId, request.GameQuestionId, request.AnswerId, request.SecondsElapsed);
+            _gamesRepository.SubmitAnswer(gameId, gameQuestionId, request.AnswerId, request.SecondsElapsed);
 
             return _createResponse(HttpStatusCode.OK);
         }
@@ -109,12 +109,12 @@ namespace TriviaApi
                     gq.Score,
                     Genre = gq.Genre.Name,
                     Question = gq.Question.Text,
-                    Answers = gq.Question.Answers.Select(a => new
+                    Answers = gq.ChosenAnswer == null ? gq.Question.Answers.Select(a => new
                     {
                         AnswerId = a.Id,
                         a.Text,
                         a.IsCorrect
-                    }),
+                    }) : null,
                     gq.ChosenAnswer,
                     gq.SecondsElapsedForAnswer
                 })
