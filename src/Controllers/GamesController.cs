@@ -40,7 +40,7 @@ namespace TriviaApi
             var game = new Game
             {
                 Title = request.Title,
-                TimeToAnswer = Convert.ToInt32(_configuration.GetSection("AppSettings")["TimeToAnswerInSeconds"])
+                TimeAllowanceInSeconds = Convert.ToInt32(_configuration.GetSection("AppSettings")["TimeAllowanceInSeconds"])
             };
 
             _gamesRepository.Add(game);
@@ -101,7 +101,7 @@ namespace TriviaApi
                 game.Id,
                 game.Title,
                 game.IsComplete,
-                game.TimeToAnswer,
+                game.TimeAllowanceInSeconds,
                 game.TotalScore,
                 GameQuestions = game.GameQuestions.Select(gq => new 
                 {

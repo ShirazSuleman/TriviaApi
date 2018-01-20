@@ -45,7 +45,7 @@ namespace TriviaApi.Migrations
 
                     b.Property<bool>("IsComplete");
 
-                    b.Property<int>("TimeToAnswer");
+                    b.Property<int>("TimeAllowanceInSeconds");
 
                     b.Property<string>("Title")
                         .IsRequired()

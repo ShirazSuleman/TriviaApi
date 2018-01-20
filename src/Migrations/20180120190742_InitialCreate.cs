@@ -15,7 +15,7 @@ namespace TriviaApi.Migrations
                     Id = table.Column<long>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     IsComplete = table.Column<bool>(nullable: false),
-                    TimeToAnswer = table.Column<int>(nullable: false),
+                    TimeAllowanceInSeconds = table.Column<int>(nullable: false),
                     Title = table.Column<string>(maxLength: 50, nullable: false),
                     TotalScore = table.Column<int>(nullable: false)
                 },

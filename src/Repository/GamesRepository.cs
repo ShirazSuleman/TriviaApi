@@ -49,7 +49,7 @@ namespace TriviaApi
             gameQuestion.ChosenAnswer = chosenAnswer;
             gameQuestion.IsCorrect = chosenAnswer.IsCorrect;
             gameQuestion.SecondsElapsedForAnswer = secondsElapsed;
-            gameQuestion.Score = _calculateAnswerScore(game.TimeToAnswer, secondsElapsed, chosenAnswer.IsCorrect);
+            gameQuestion.Score = _calculateAnswerScore(game.TimeAllowanceInSeconds, secondsElapsed, chosenAnswer.IsCorrect);
 
             _updateGameScore(gameId, gameQuestion.Score.Value);
             _checkGameCompletionStatus(gameId);
@@ -62,9 +62,9 @@ namespace TriviaApi
             return _context.GameQuestions.Include(gq => gq.ChosenAnswer).FirstOrDefault(gq => gq.GameId == gameId && gq.Id == gameQuestionId);
         }
 
-        private int _calculateAnswerScore(int timeToAnswer, int secondsElapsed, bool isCorrect)
+        private int _calculateAnswerScore(int timeAllowanceInSeconds, int secondsElapsed, bool isCorrect)
         {
-            var score = timeToAnswer - secondsElapsed;
+            var score = timeAllowanceInSeconds - secondsElapsed;
 
             if (score < 0)
                 score = 0;
