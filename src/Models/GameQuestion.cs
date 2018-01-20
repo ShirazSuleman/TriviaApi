@@ -1,35 +1,40 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Newtonsoft.Json;
 
 namespace TriviaApi
 {
-    public class GameQuestion : BaseEntity
+    public class GameQuestion
     {
+        public long Id { get; set; }
+
         public int? Score { get; set; }
 
         public bool? IsCorrect { get; set; }
 
-        [ForeignKey("Game")]
+        public int? SecondsElapsedForAnswer { get; set; }
+
+        [ForeignKey("Game"), JsonIgnore]
         public long GameId { get; set; }
 
-        [Required]
+        [Required, JsonIgnore]
         public Game Game { get; set; }
 
-        [ForeignKey("Genre")]
+        [ForeignKey("Genre"), JsonIgnore]
         public long GenreId { get; set; }
 
         [Required]
         public Genre Genre { get; set; }
 
-        [ForeignKey("Question")]
+        [ForeignKey("Question"), JsonIgnore]
         public long QuestionId { get; set; }
 
-        [Required]
+        [Required, JsonIgnore]
         public Question Question { get; set; }
 
-        [ForeignKey("Answer")]
+        [ForeignKey("ChosenAnswer"), JsonIgnore]
         public long? AnswerId { get; set; }
 
-        public Answer Answer { get; set; }
+        public Answer ChosenAnswer { get; set; }
     }
 }

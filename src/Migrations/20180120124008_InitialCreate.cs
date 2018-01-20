@@ -14,8 +14,10 @@ namespace TriviaApi.Migrations
                 {
                     Id = table.Column<long>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Complete = table.Column<bool>(nullable: false),
-                    Title = table.Column<string>(maxLength: 50, nullable: false)
+                    IsComplete = table.Column<bool>(nullable: false),
+                    TimeToAnswer = table.Column<int>(nullable: false),
+                    Title = table.Column<string>(maxLength: 50, nullable: false),
+                    TotalScore = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -87,7 +89,8 @@ namespace TriviaApi.Migrations
                     GenreId = table.Column<long>(nullable: false),
                     IsCorrect = table.Column<bool>(nullable: true),
                     QuestionId = table.Column<long>(nullable: false),
-                    Score = table.Column<int>(nullable: true)
+                    Score = table.Column<int>(nullable: true),
+                    SecondsElapsedForAnswer = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {

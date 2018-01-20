@@ -43,11 +43,15 @@ namespace TriviaApi.Migrations
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<bool>("Complete");
+                    b.Property<bool>("IsComplete");
+
+                    b.Property<int>("TimeToAnswer");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(50);
+
+                    b.Property<int>("TotalScore");
 
                     b.HasKey("Id");
 
@@ -73,6 +77,8 @@ namespace TriviaApi.Migrations
                     b.Property<long>("QuestionId");
 
                     b.Property<int?>("Score");
+
+                    b.Property<int?>("SecondsElapsedForAnswer");
 
                     b.HasKey("Id");
 
@@ -135,7 +141,7 @@ namespace TriviaApi.Migrations
 
             modelBuilder.Entity("TriviaApi.GameQuestion", b =>
                 {
-                    b.HasOne("TriviaApi.Answer", "Answer")
+                    b.HasOne("TriviaApi.Answer", "ChosenAnswer")
                         .WithMany()
                         .HasForeignKey("AnswerId");
 

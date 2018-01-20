@@ -24,10 +24,12 @@ namespace TriviaApi
 
         public static void EnsureSeeded(this TriviaContext context)
         {
+            var settings = new JsonSerializerSettings { ContractResolver = new SetOnlyContractResolver() };
+
             // Ensure we have genres
             if (!context.Genres.Any())
             {
-                var genres = JsonConvert.DeserializeObject<List<Genre>>(File.ReadAllText("Seed" + Path.DirectorySeparatorChar + "genres.json"));
+                var genres = JsonConvert.DeserializeObject<List<Genre>>(File.ReadAllText("Seed" + Path.DirectorySeparatorChar + "genres.json"), settings);
                 context.AddRange(genres);
                 context.SaveChanges();
             }
@@ -35,15 +37,15 @@ namespace TriviaApi
             // Ensure we have questions
             if (!context.Questions.Any())
             {
-                var questions = JsonConvert.DeserializeObject<List<Question>>(File.ReadAllText("Seed" + Path.DirectorySeparatorChar + "questions.json"));
+                var questions = JsonConvert.DeserializeObject<List<Question>>(File.ReadAllText("Seed" + Path.DirectorySeparatorChar + "questions.json"), settings);
                 context.AddRange(questions);
                 context.SaveChanges();
             }
-            
+
             // Ensure we have answers
             if (!context.Answers.Any())
             {
-                var answers = JsonConvert.DeserializeObject<List<Answer>>(File.ReadAllText("Seed" + Path.DirectorySeparatorChar + "answers.json"));
+                var answers = JsonConvert.DeserializeObject<List<Answer>>(File.ReadAllText("Seed" + Path.DirectorySeparatorChar + "answers.json"), settings);
                 context.AddRange(answers);
                 context.SaveChanges();
             }
