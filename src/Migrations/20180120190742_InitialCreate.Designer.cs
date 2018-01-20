@@ -10,7 +10,7 @@ using TriviaApi;
 namespace TriviaApi.Migrations
 {
     [DbContext(typeof(TriviaContext))]
-    [Migration("20180120124008_InitialCreate")]
+    [Migration("20180120190742_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -46,7 +46,7 @@ namespace TriviaApi.Migrations
 
                     b.Property<bool>("IsComplete");
 
-                    b.Property<int>("TimeToAnswer");
+                    b.Property<int>("TimeAllowanceInSeconds");
 
                     b.Property<string>("Title")
                         .IsRequired()

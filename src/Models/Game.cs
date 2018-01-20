@@ -15,7 +15,7 @@ namespace TriviaApi
 
         public int TotalScore { get; set; }
 
-        public int TimeToAnswer { get; set; }
+        public int TimeAllowanceInSeconds { get; set; }
 
         public ICollection<GameQuestion> GameQuestions { get; set; }
     }
