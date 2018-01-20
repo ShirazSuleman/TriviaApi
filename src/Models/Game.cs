@@ -3,15 +3,14 @@ using System.ComponentModel.DataAnnotations;
 
 namespace TriviaApi
 {
-    public class Game
+    public class Game : BaseEntity
     {
-        public long Id { get; set; }
-
         [Required]
+        [StringLength(50)]
         public string Title { get; set; }
 
         public bool Complete { get; set; }
 
-        public List<GameQuestion> GameQuestions { get; set; }
+        public ICollection<GameQuestion> GameQuestions { get; set; }
     }
 }

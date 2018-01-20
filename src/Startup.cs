@@ -24,14 +24,23 @@ namespace TriviaApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddEntityFrameworkSqlite();
-            services.AddDbContext<TriviaContext>(opt => opt.UseSqlite("Data Source=./trivia_app.db"));
+            services.AddDbContext<TriviaContext>(opt => opt.UseSqlite("Data Source=./DB/trivia_app.db"));
+            services.AddScoped<IGameRepository, GameRepository>();
             services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                if (!serviceScope.ServiceProvider.GetService<TriviaContext>().AllMigrationsApplied())
+                {
+                    serviceScope.ServiceProvider.GetService<TriviaContext>().Database.Migrate();
+                    serviceScope.ServiceProvider.GetService<TriviaContext>().EnsureSeeded();
+                }
+            }
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

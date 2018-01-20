@@ -10,7 +10,7 @@ using TriviaApi;
 namespace TriviaApi.Migrations
 {
     [DbContext(typeof(TriviaContext))]
-    [Migration("20180119132517_InitialCreate")]
+    [Migration("20180120064457_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -26,10 +26,11 @@ namespace TriviaApi.Migrations
 
                     b.Property<bool>("IsCorrect");
 
-                    b.Property<long?>("QuestionId");
+                    b.Property<long>("QuestionId");
 
                     b.Property<string>("Text")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(255);
 
                     b.HasKey("Id");
 
@@ -46,9 +47,13 @@ namespace TriviaApi.Migrations
                     b.Property<bool>("Complete");
 
                     b.Property<string>("Title")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(50);
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Title")
+                        .IsUnique();
 
                     b.ToTable("Games");
                 });
@@ -60,13 +65,15 @@ namespace TriviaApi.Migrations
 
                     b.Property<long?>("AnswerId");
 
-                    b.Property<long?>("GameId");
+                    b.Property<long>("GameId");
 
-                    b.Property<long?>("GenreId");
+                    b.Property<long>("GenreId");
 
-                    b.Property<long?>("QuestionId");
+                    b.Property<bool?>("IsCorrect");
 
-                    b.Property<int>("Score");
+                    b.Property<long>("QuestionId");
+
+                    b.Property<int?>("Score");
 
                     b.HasKey("Id");
 
@@ -87,9 +94,13 @@ namespace TriviaApi.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Name")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(50);
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("Genres");
                 });
@@ -99,14 +110,18 @@ namespace TriviaApi.Migrations
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<long?>("GenreId");
+                    b.Property<long>("GenreId");
 
                     b.Property<string>("Text")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(255);
 
                     b.HasKey("Id");
 
                     b.HasIndex("GenreId");
+
+                    b.HasIndex("Text")
+                        .IsUnique();
 
                     b.ToTable("Questions");
                 });
@@ -115,7 +130,8 @@ namespace TriviaApi.Migrations
                 {
                     b.HasOne("TriviaApi.Question", "Question")
                         .WithMany("Answers")
-                        .HasForeignKey("QuestionId");
+                        .HasForeignKey("QuestionId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("TriviaApi.GameQuestion", b =>
@@ -126,22 +142,26 @@ namespace TriviaApi.Migrations
 
                     b.HasOne("TriviaApi.Game", "Game")
                         .WithMany("GameQuestions")
-                        .HasForeignKey("GameId");
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("TriviaApi.Genre", "Genre")
                         .WithMany()
-                        .HasForeignKey("GenreId");
+                        .HasForeignKey("GenreId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("TriviaApi.Question", "Question")
                         .WithMany()
-                        .HasForeignKey("QuestionId");
+                        .HasForeignKey("QuestionId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("TriviaApi.Question", b =>
                 {
                     b.HasOne("TriviaApi.Genre", "Genre")
                         .WithMany("Questions")
-                        .HasForeignKey("GenreId");
+                        .HasForeignKey("GenreId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

@@ -3,14 +3,13 @@ using System.ComponentModel.DataAnnotations;
 
 namespace TriviaApi
 {
-    public class Genre 
-    {
-        public long Id { get; set; }
-        
+    public class Genre : BaseEntity
+    {        
         [Required]
+        [StringLength(50)]
         public string Name { get; set; }
 
-        public List<Question> Questions { get; set; }
+        public ICollection<Question> Questions { get; set; }
     }
 }
 

@@ -15,7 +15,7 @@ namespace TriviaApi.Migrations
                     Id = table.Column<long>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Complete = table.Column<bool>(nullable: false),
-                    Title = table.Column<string>(nullable: false)
+                    Title = table.Column<string>(maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -28,7 +28,7 @@ namespace TriviaApi.Migrations
                 {
                     Id = table.Column<long>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(nullable: false)
+                    Name = table.Column<string>(maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -41,8 +41,8 @@ namespace TriviaApi.Migrations
                 {
                     Id = table.Column<long>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    GenreId = table.Column<long>(nullable: true),
-                    Text = table.Column<string>(nullable: false)
+                    GenreId = table.Column<long>(nullable: false),
+                    Text = table.Column<string>(maxLength: 255, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -52,7 +52,7 @@ namespace TriviaApi.Migrations
                         column: x => x.GenreId,
                         principalTable: "Genres",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -62,8 +62,8 @@ namespace TriviaApi.Migrations
                     Id = table.Column<long>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     IsCorrect = table.Column<bool>(nullable: false),
-                    QuestionId = table.Column<long>(nullable: true),
-                    Text = table.Column<string>(nullable: false)
+                    QuestionId = table.Column<long>(nullable: false),
+                    Text = table.Column<string>(maxLength: 255, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -73,7 +73,7 @@ namespace TriviaApi.Migrations
                         column: x => x.QuestionId,
                         principalTable: "Questions",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -83,10 +83,11 @@ namespace TriviaApi.Migrations
                     Id = table.Column<long>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     AnswerId = table.Column<long>(nullable: true),
-                    GameId = table.Column<long>(nullable: true),
-                    GenreId = table.Column<long>(nullable: true),
-                    QuestionId = table.Column<long>(nullable: true),
-                    Score = table.Column<int>(nullable: false)
+                    GameId = table.Column<long>(nullable: false),
+                    GenreId = table.Column<long>(nullable: false),
+                    IsCorrect = table.Column<bool>(nullable: true),
+                    QuestionId = table.Column<long>(nullable: false),
+                    Score = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -102,19 +103,19 @@ namespace TriviaApi.Migrations
                         column: x => x.GameId,
                         principalTable: "Games",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_GameQuestions_Genres_GenreId",
                         column: x => x.GenreId,
                         principalTable: "Genres",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_GameQuestions_Questions_QuestionId",
                         column: x => x.QuestionId,
                         principalTable: "Questions",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -143,9 +144,27 @@ namespace TriviaApi.Migrations
                 column: "QuestionId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Games_Title",
+                table: "Games",
+                column: "Title",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Genres_Name",
+                table: "Genres",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Questions_GenreId",
                 table: "Questions",
                 column: "GenreId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Questions_Text",
+                table: "Questions",
+                column: "Text",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

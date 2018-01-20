@@ -1,0 +1,80 @@
+[
+    { "Text": "Jack Nicklaus", "QuestionId": "1", "IsCorrect": true },
+    { "Text": "Tiger Woods", "QuestionId": "1", "IsCorrect": false },
+    { "Text": "Phil Mickelson", "QuestionId": "1", "IsCorrect": false },
+    { "Text": "Arnold Palmer", "QuestionId": "1", "IsCorrect": false },
+
+    { "Text": "Chess", "QuestionId": "2", "IsCorrect": true  },
+    { "Text": "Football", "QuestionId": "2", "IsCorrect": false  },
+    { "Text": "Baseball", "QuestionId": "2", "IsCorrect": false  },
+    { "Text": "Backgammon", "QuestionId": "2", "IsCorrect": false  },
+
+    { "Text": "Green Bay Packers", "QuestionId": "3", "IsCorrect": true },
+    { "Text": "New England Patriots", "QuestionId": "3", "IsCorrect": false },
+    { "Text": "Dallas Cowboys", "QuestionId": "3", "IsCorrect": false },
+    { "Text": "Pittsburgh Steelers", "QuestionId": "3", "IsCorrect": false },
+
+    { "Text": "Basketball", "QuestionId": "4", "IsCorrect": true },
+    { "Text": "Golf", "QuestionId": "4", "IsCorrect": false },
+    { "Text": "NASCAR", "QuestionId": "4", "IsCorrect": false },
+    { "Text": "Tennis", "QuestionId": "4", "IsCorrect": false },
+
+    { "Text": "2002", "QuestionId": "5", "IsCorrect": true },
+    { "Text": "1999", "QuestionId": "5", "IsCorrect": false },
+    { "Text": "2010", "QuestionId": "5", "IsCorrect": false },
+    { "Text": "2006", "QuestionId": "5", "IsCorrect": false },
+
+
+
+    { "Text": "Hermione Granger", "QuestionId": "6", "IsCorrect": true },
+    { "Text": "Minerva McGonagall", "QuestionId": "6", "IsCorrect": false },
+    { "Text": "Petunia Dursley", "QuestionId": "6", "IsCorrect": false },
+    { "Text": "Cho Chang", "QuestionId": "6", "IsCorrect": false },
+
+    { "Text": "The Hulk", "QuestionId": "7", "IsCorrect": true },
+    { "Text": "Iron Man", "QuestionId": "7", "IsCorrect": false },
+    { "Text": "Thor", "QuestionId": "7", "IsCorrect": false },
+    { "Text": "Wolverine", "QuestionId": "7", "IsCorrect": false },
+
+    { "Text": "Michael J. Fox", "QuestionId": "8", "IsCorrect": true },
+    { "Text": "Christopher Lloyd", "QuestionId": "8", "IsCorrect": false },
+    { "Text": "Crispin Glover", "QuestionId": "8", "IsCorrect": false },
+    { "Text": "Thomas F. Wilson", "QuestionId": "8", "IsCorrect": false },
+
+    { "Text": "Wonder Woman", "QuestionId": "9", "IsCorrect": true },
+    { "Text": "Thor: Ragnarok", "QuestionId": "9", "IsCorrect": false },
+    { "Text": "Guardians of the Galaxy Vol. 2", "QuestionId": "9", "IsCorrect": false },
+    { "Text": "Logan", "QuestionId": "9", "IsCorrect": false },
+
+    { "Text": "Christopher Lee", "QuestionId": "10", "IsCorrect": true },
+    { "Text": "Viggo Mortensen", "QuestionId": "10", "IsCorrect": false },
+    { "Text": "Orlando Bloom", "QuestionId": "10", "IsCorrect": false },
+    { "Text": "Ian McKellen", "QuestionId": "10", "IsCorrect": false },
+
+
+
+    { "Text": "Dionysos", "QuestionId": "11", "IsCorrect": true },
+    { "Text": "Zeus", "QuestionId": "11", "IsCorrect": false },
+    { "Text": "Aether", "QuestionId": "11", "IsCorrect": false },
+    { "Text": "Phobos", "QuestionId": "11", "IsCorrect": false },
+
+    { "Text": "Guilder", "QuestionId": "12", "IsCorrect": true  },
+    { "Text": "Markka", "QuestionId": "12", "IsCorrect": false  },
+    { "Text": "Drachma", "QuestionId": "12", "IsCorrect": false  },
+    { "Text": "Lira", "QuestionId": "12", "IsCorrect": false  },
+
+    { "Text": "Calvin Coolidge", "QuestionId": "13", "IsCorrect": true },
+    { "Text": "Richard Nixon", "QuestionId": "13", "IsCorrect": false },
+    { "Text": "Jimmy Carter", "QuestionId": "13", "IsCorrect": false },
+    { "Text": "Ronald Reagan", "QuestionId": "13", "IsCorrect": false },
+
+    { "Text": "Austria", "QuestionId": "14", "IsCorrect": true },
+    { "Text": "France", "QuestionId": "14", "IsCorrect": false },
+    { "Text": "Luxembourg", "QuestionId": "14", "IsCorrect": false },
+    { "Text": "Monaco", "QuestionId": "14", "IsCorrect": false },
+
+    { "Text": "Russia", "QuestionId": "15", "IsCorrect": true },
+    { "Text": "Spain", "QuestionId": "15", "IsCorrect": false },
+    { "Text": "China", "QuestionId": "15", "IsCorrect": false },
+    { "Text": "Great Britain", "QuestionId": "15", "IsCorrect": false }
+]

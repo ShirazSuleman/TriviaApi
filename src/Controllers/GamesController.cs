@@ -7,17 +7,17 @@ namespace TriviaApi
     [Route("api/[controller]")]
     public class GamesController : Controller
     {
-        private readonly TriviaContext _context;
+        private readonly IGameRepository _gameRepository;
 
-        public GamesController(TriviaContext context)
+        public GamesController(IGameRepository gameRepository)
         {
-            _context = context;
+            _gameRepository = gameRepository;
         }
 
         [HttpGet("{id}", Name = "GetGame")]
         public IActionResult GetById(long id)
         {
-            var game = _context.Games.FirstOrDefault(g => g.Id == id);
+            var game = _gameRepository.GetById(id);
             if (game == null)
             {
                 return NotFound();
@@ -33,8 +33,7 @@ namespace TriviaApi
                 return BadRequest();
             }
 
-            _context.Games.Add(game);
-            _context.SaveChanges();
+            _gameRepository.Add(game);
 
             return CreatedAtRoute("GetGame", new { id = game.Id }, game);
         }
