@@ -1,6 +1,6 @@
 # TriviaApi
 
-### Steps To Setup Application
+### Run App Locally
 
 * Ensure that the [.NET Core SDK](https://www.microsoft.com/net/learn/get-started) is installed.
 * Clone this repository.
