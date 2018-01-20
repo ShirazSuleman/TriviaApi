@@ -26,6 +26,7 @@ namespace TriviaApi
         {
             services.AddDbContext<TriviaContext>(opt => opt.UseSqlite("Data Source=./DB/trivia_app.db"));
             services.AddScoped<IGameRepository, GameRepository>();
+            services.AddScoped<IGameQuestionRepository, GameQuestionRepository>();
             services.AddMvc();
         }
 
