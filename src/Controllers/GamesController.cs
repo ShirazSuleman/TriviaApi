@@ -19,8 +19,8 @@ namespace TriviaApi
             _configuration = configuration;
         }
 
-        [HttpGet("{gameId}", Name = "GetGame")]
-        public IActionResult GetById(long gameId)
+        [HttpGet("{gameId}")]
+        public IActionResult GetGame([FromRoute] long gameId)
         {
             var game = _gamesRepository.GetById(gameId);
             if (game == null)
@@ -32,21 +32,26 @@ namespace TriviaApi
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] Game game)
+        public IActionResult AddGame([FromBody] AddGameRequest request)
         {
-            if (game == null || game.Title == null)
+            if (request == null || request.Title == null)
             {
-                return _createResponse(HttpStatusCode.BadRequest, "Request contains invalid game object.");
+                return _createResponse(HttpStatusCode.BadRequest, "Invalid request.");
             }
 
-            game.TimeToAnswer = Convert.ToInt32(_configuration.GetSection("AppSettings")["TimeToAnswerInSeconds"]);
+            var game = new Game
+            {
+                Title = request.Title,
+                TimeToAnswer = Convert.ToInt32(_configuration.GetSection("AppSettings")["TimeToAnswerInSeconds"])
+            };
+
             _gamesRepository.Add(game);
 
             return _createResponse(HttpStatusCode.OK, data: _parseGameStatus(_gamesRepository.GetGameInformation(game.Id)));
         }
 
         [HttpPost("{gameId}/submitAnswer")]
-        public IActionResult AnswerQuestion(long gameId, [FromBody] SubmitAnswerRequest request)
+        public IActionResult SubmitAnswer([FromRoute] long gameId, [FromBody] SubmitAnswerRequest request)
         {
             var game = _gamesRepository.GetById(gameId);
             if (game == null)
