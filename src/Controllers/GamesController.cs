@@ -98,18 +98,23 @@ namespace TriviaApi
         {
             return new 
             {
-                game.Id,
+                GameId = game.Id,
                 game.Title,
                 game.IsComplete,
                 game.TimeToAnswer,
                 game.TotalScore,
                 GameQuestions = game.GameQuestions.Select(gq => new 
                 {
-                    gq.Id,
+                    GameQuestionId = gq.Id,
                     gq.Score,
                     Genre = gq.Genre.Name,
                     Question = gq.Question.Text,
-                    gq.Question.Answers,
+                    Answers = gq.Question.Answers.Select(a => new
+                    {
+                        AnswerId = a.Id,
+                        a.Text,
+                        a.IsCorrect
+                    }),
                     gq.ChosenAnswer,
                     gq.SecondsElapsedForAnswer
                 })
