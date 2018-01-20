@@ -8,10 +8,12 @@ namespace TriviaApi
     public class GamesController : Controller
     {
         private readonly IGameRepository _gameRepository;
+        private readonly IGameQuestionRepository _gameQuestionRepository;
 
-        public GamesController(IGameRepository gameRepository)
+        public GamesController(IGameRepository gameRepository, IGameQuestionRepository gameQuestionRepository)
         {
             _gameRepository = gameRepository;
+            _gameQuestionRepository = gameQuestionRepository;
         }
 
         [HttpGet("{id}", Name = "GetGame")]
@@ -34,6 +36,7 @@ namespace TriviaApi
             }
 
             _gameRepository.Add(game);
+            _gameQuestionRepository.AddGame(game);
 
             return CreatedAtRoute("GetGame", new { id = game.Id }, game);
         }

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace TriviaApi
 {
@@ -22,7 +23,7 @@ namespace TriviaApi
 
         public Game GetById(long id)
         {
-            return _context.Games.FirstOrDefault(g => g.Id == id);
+            return _context.Games.Include(g => g.GameQuestions).FirstOrDefault(g => g.Id == id);
         }
     }
 }

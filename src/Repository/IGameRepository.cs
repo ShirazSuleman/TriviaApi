@@ -6,6 +6,6 @@ namespace TriviaApi
     {
         Game GetById(long id);
         IEnumerable<Game> ListAll();
-        void Add(Game character);
+        void Add(Game game);
     }
 }
