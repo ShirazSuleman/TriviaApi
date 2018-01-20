@@ -39,7 +39,6 @@ namespace TriviaApi
 
             game.TimeToAnswer = timeToAnswer;
             _gamesRepository.Add(game);
-            _gamesRepository.AddGameQuestions(game);
 
             return new ObjectResult(_parseGameStatus(_gamesRepository.GetGameInformation(game.Id)));
         }

@@ -17,6 +17,7 @@ namespace TriviaApi
         public void Add(Game game)
         {
             _context.Games.Add(game);
+            _addGameQuestions(game);
             _context.SaveChanges();
         }
 
@@ -28,12 +29,6 @@ namespace TriviaApi
         public Game GetGameInformation(long gameId)
         {
             return _getGameInformation(gameId);
-        }
-
-        public void AddGameQuestions(Game game)
-        {
-            _context.GameQuestions.AddRange(_context.Genres.Join(_context.Questions, g => g.Id, q => q.GenreId, (g, q) => new GameQuestion { Game = game, Genre = g, Question = q }));
-            _context.SaveChanges();
         }
 
         public bool ValidateQuestionAndAnswer(long answerId, long gameQuestionId)
@@ -88,6 +83,11 @@ namespace TriviaApi
         {
             var game = _getGameInformation(gameId);
             game.IsComplete = game.GameQuestions.All(gq => gq.ChosenAnswer != null);
+        }
+
+        private void _addGameQuestions(Game game)
+        {
+            _context.GameQuestions.AddRange(_context.Genres.Join(_context.Questions, g => g.Id, q => q.GenreId, (g, q) => new GameQuestion { Game = game, Genre = g, Question = q }));
         }
 
         private Game _getGameInformation(long gameId)
