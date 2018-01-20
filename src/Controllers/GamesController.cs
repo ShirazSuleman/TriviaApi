@@ -34,10 +34,8 @@ namespace TriviaApi
         [HttpPost]
         public IActionResult AddGame([FromBody] AddGameRequest request)
         {
-            if (request == null || request.Title == null)
-            {
+            if (!ModelState.IsValid)
                 return _createResponse(HttpStatusCode.BadRequest, "Invalid request.");
-            }
 
             var game = new Game
             {
@@ -53,6 +51,9 @@ namespace TriviaApi
         [HttpPost("{gameId}/submitAnswer")]
         public IActionResult SubmitAnswer([FromRoute] long gameId, [FromBody] SubmitAnswerRequest request)
         {
+            if (!ModelState.IsValid)
+                return _createResponse(HttpStatusCode.BadRequest, "Invalid request.");
+
             var game = _gamesRepository.GetById(gameId);
             if (game == null)
             {
@@ -70,12 +71,12 @@ namespace TriviaApi
                 return _createResponse(HttpStatusCode.BadRequest, "Question already answered.");
             }
 
-            if (!_gamesRepository.ValidateQuestionAndAnswer(request.AnswerId, request.GameQuestionId))
+            if (!_gamesRepository.ValidateAnswerToQuestion(request.AnswerId, request.GameQuestionId))
             {
                 return _createResponse(HttpStatusCode.BadRequest, "Invalid answer id for the question.");
             }
 
-            _gamesRepository.AnswerQuestion(gameId, request.GameQuestionId, request.AnswerId, request.SecondsElapsed);
+            _gamesRepository.SubmitAnswer(gameId, request.GameQuestionId, request.AnswerId, request.SecondsElapsed);
 
             return _createResponse(HttpStatusCode.OK);
         }

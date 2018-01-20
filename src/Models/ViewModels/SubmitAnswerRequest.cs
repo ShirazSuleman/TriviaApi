@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace TriviaApi
 {
     public class SubmitAnswerRequest
@@ -6,6 +8,7 @@ namespace TriviaApi
 
         public long AnswerId { get; set; }
 
+        [Range(0, int.MaxValue)]
         public int SecondsElapsed { get; set; }
     }
 }
