@@ -26,11 +26,13 @@ namespace TriviaApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<IConfiguration>(Configuration);
             services.AddDbContext<TriviaContext>(opt => opt.UseSqlite("Data Source=./trivia_app.db"));
             services.AddScoped<IGamesRepository, GamesRepository>();
             services.AddMvc().AddJsonOptions(options => {
                 options.SerializerSettings.ContractResolver = new SetOnlyContractResolver();
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
             });
         }
 

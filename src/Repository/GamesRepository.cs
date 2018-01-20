@@ -68,9 +68,9 @@ namespace TriviaApi
             _context.SaveChanges();
         }
 
-        public GameQuestion GetQuestion(long gameQuestionId)
+        public GameQuestion GetGameQuestion(long gameId, long gameQuestionId)
         {
-            return _context.GameQuestions.Include(gq => gq.ChosenAnswer).FirstOrDefault(gq => gq.Id == gameQuestionId);
+            return _context.GameQuestions.Include(gq => gq.ChosenAnswer).FirstOrDefault(gq => gq.GameId == gameId && gq.Id == gameQuestionId);
         }
 
         private void _updateGameScore(long gameId, int points)

@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System;
+using System.Net;
+using Microsoft.Extensions.Configuration;
 
 namespace TriviaApi
 {
@@ -9,68 +11,81 @@ namespace TriviaApi
     public class GamesController : Controller
     {
         private readonly IGamesRepository _gamesRepository;
+        private readonly IConfiguration _configuration;
 
-        private const int timeToAnswer = 60;
-
-        public GamesController(IGamesRepository gamesRepository)
+        public GamesController(IGamesRepository gamesRepository, IConfiguration configuration)
         {
             _gamesRepository = gamesRepository;
+            _configuration = configuration;
         }
 
-        [HttpGet("{id}", Name = "GetGame")]
-        public IActionResult GetById(long id)
+        [HttpGet("{gameId}", Name = "GetGame")]
+        public IActionResult GetById(long gameId)
         {
-            var game = _gamesRepository.GetById(id);
+            var game = _gamesRepository.GetById(gameId);
             if (game == null)
             {
-                return NotFound();
+                return _createResponse(HttpStatusCode.NotFound, "Invalid game id.");
             }
 
-            return new ObjectResult(_parseGameStatus(_gamesRepository.GetGameInformation(id)));
+            return _createResponse(HttpStatusCode.OK, data: _parseGameStatus(_gamesRepository.GetGameInformation(game.Id)));    
         }
 
         [HttpPost]
         public IActionResult Create([FromBody] Game game)
         {
-            if (game == null)
+            if (game == null || game.Title == null)
             {
-                return BadRequest();
+                return _createResponse(HttpStatusCode.BadRequest, "Request contains invalid game object.");
             }
 
-            game.TimeToAnswer = timeToAnswer;
+            game.TimeToAnswer = Convert.ToInt32(_configuration.GetSection("AppSettings")["TimeToAnswerInSeconds"]);
             _gamesRepository.Add(game);
 
-            return new ObjectResult(_parseGameStatus(_gamesRepository.GetGameInformation(game.Id)));
+            return _createResponse(HttpStatusCode.OK, data: _parseGameStatus(_gamesRepository.GetGameInformation(game.Id)));
         }
 
-        [HttpPost("{id}/gameQuestion/{gameQuestionId}/answer/{answerId}")]
-        public IActionResult AnswerQuestion(long id, long gameQuestionId, long answerId, int secondsElapsed)
+        [HttpPost("{gameId}/submitAnswer")]
+        public IActionResult AnswerQuestion(long gameId, [FromBody] SubmitAnswerRequest request)
         {
-            var game = _gamesRepository.GetById(id);
+            var game = _gamesRepository.GetById(gameId);
             if (game == null)
             {
-                return NotFound();
+                return _createResponse(HttpStatusCode.NotFound, "Invalid game id.");
             }
 
-            var gameQuestion = _gamesRepository.GetQuestion(gameQuestionId);
+            var gameQuestion = _gamesRepository.GetGameQuestion(gameId, request.GameQuestionId);
             if (gameQuestion == null)
             {
-                return NotFound();
+                return _createResponse(HttpStatusCode.NotFound, "Invalid game question id.");
             }
 
             if (gameQuestion.ChosenAnswer != null)
             {
-                return BadRequest("Question already answered.");
+                return _createResponse(HttpStatusCode.BadRequest, "Question already answered.");
             }
 
-            if (!_gamesRepository.ValidateQuestionAndAnswer(answerId, gameQuestionId))
+            if (!_gamesRepository.ValidateQuestionAndAnswer(request.AnswerId, request.GameQuestionId))
             {
-                return BadRequest("Invalid answer for the question.");
+                return _createResponse(HttpStatusCode.BadRequest, "Invalid answer id for the question.");
             }
 
-            _gamesRepository.AnswerQuestion(id, gameQuestionId, answerId, secondsElapsed);
+            _gamesRepository.AnswerQuestion(gameId, request.GameQuestionId, request.AnswerId, request.SecondsElapsed);
 
-            return Ok();
+            return _createResponse(HttpStatusCode.OK);
+        }
+
+        private IActionResult _createResponse(HttpStatusCode code, string message = null, object data = null)
+        {
+            var response = new GenericResponse<object>();
+
+            response.Meta.Code = (int)code;
+            response.Meta.Status = code.ToString();
+            
+            response.Meta.Message = message;
+            response.Data = data;
+
+            return StatusCode(response.Meta.Code, response);
         }
 
         private object _parseGameStatus(Game game)

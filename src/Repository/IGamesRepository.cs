@@ -7,7 +7,7 @@ namespace TriviaApi
         Game GetById(long gameId);
         void Add(Game game);
         Game GetGameInformation(long gameId);
-        GameQuestion GetQuestion(long gameQuestionId);
+        GameQuestion GetGameQuestion(long gameId, long gameQuestionId);
         void AnswerQuestion(long gameId, long gameQuestionId, long answerId, int secondsElapsed);
         bool ValidateQuestionAndAnswer(long answerId, long gameQuestionId);
     }
