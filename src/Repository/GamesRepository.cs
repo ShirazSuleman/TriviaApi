@@ -42,17 +42,18 @@ namespace TriviaApi
         public void SubmitAnswer(long gameId, long gameQuestionId, long answerId, int secondsElapsed)
         {
             var game = _getGameInformation(gameId);
-
             var gameQuestion = _context.GameQuestions.First(gq => gq.Id == gameQuestionId);
             var chosenAnswer = _context.Answers.First(a => a.Id == answerId && a.QuestionId == gameQuestion.QuestionId);
 
+            // Update game question
             gameQuestion.ChosenAnswer = chosenAnswer;
             gameQuestion.IsCorrect = chosenAnswer.IsCorrect;
             gameQuestion.SecondsElapsedForAnswer = secondsElapsed;
             gameQuestion.Score = _calculateAnswerScore(game.TimeAllowanceInSeconds, secondsElapsed, chosenAnswer.IsCorrect);
 
-            _updateGameScore(gameId, gameQuestion.Score.Value);
-            _checkGameCompletionStatus(gameId);
+            // Update game
+            game.TotalScore += gameQuestion.Score.Value;
+            game.IsComplete = game.GameQuestions.All(gq => gq.ChosenAnswer != null);
 
             _context.SaveChanges();
         }
@@ -70,18 +71,6 @@ namespace TriviaApi
                 score = 0;
 
             return isCorrect ? score : 0;
-        }
-
-        private void _updateGameScore(long gameId, int points)
-        {
-            var game = _getGameInformation(gameId);
-            game.TotalScore += points;
-        }
-
-        private void _checkGameCompletionStatus(long gameId)
-        {
-            var game = _getGameInformation(gameId);
-            game.IsComplete = game.GameQuestions.All(gq => gq.ChosenAnswer != null);
         }
 
         private Game _getGameInformation(long gameId)
