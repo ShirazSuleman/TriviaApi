@@ -1,19 +1,19 @@
 [
-    { "Text": "Who was the first golfer to win the Masters Tournament two years in a row?", "GenreId": "1" },
-    { "Text": "Bobby Fischer is considered by many to be the greatest player of all time in which game?", "GenreId": "1" },
-    { "Text": "Lambeau Field is the home field of which National Football League team?", "GenreId": "1" },
-    { "Text": "Anthony Jerome \"Spud\" Webb retired from what professional sport in 1997?", "GenreId": "1" },
-    { "Text": "In what year did the Houston Texans join the NFL?", "GenreId": "1" },
+    { "Text": "In which movie can the Character HAL 9000 be found?", "GenreId": "1" },
+    { "Text": "Which 1979 movie about post-apocalyptic life in the Outback became a cult hit?", "GenreId": "1" },
+    { "Text": "In \"The Empire Strikes Back\" what did the Millennium Falcon fly into to escape the Imperial fighters?", "GenreId": "1" },
+    { "Text": "In which 1990 sci-fi movie did we see Fred Ward and Kevin Bacon being terrorized by gigantic worms?", "GenreId": "1" },
+    { "Text": "Set in the year 2517, what space drama TV series follows the adventures of the renegade crew of the spaceship Serenity?", "GenreId": "1" },
 
     { "Text": "Emma Watson is known for playing which character in Harry Potter?", "GenreId": "2" },
-    { "Text": "Bruce Banner turns into what fictional superhero when he becomes angry?", "GenreId": "2" },
-    { "Text": "Which actor played Marty McFly in the 1980s sci-fi classic \"Back to the Future\"?", "GenreId": "2" },
-    { "Text": "Actress Gal Gadot starred in what American superhero film released in the summer of 2017?", "GenreId": "2" },
+    { "Text": "What is the name of Gandalf's horse?", "GenreId": "2" },
+    { "Text": "What is the name of the dragon in The Hobbit?", "GenreId": "2" },
+    { "Text": "In the movie \"The Neverending Story\", what is the name of the main character?", "GenreId": "2" },
     { "Text": "In the \"Lord of the Rings\" film series which actor plays the character of Saruman?", "GenreId": "2" },
 
-    { "Text": "According to Greek mythology, who was the god of wine?", "GenreId": "3" },
-    { "Text": "Before the introduction of the euro, what was the name for the basic monetary unit used in the Netherlands?", "GenreId": "3" },
-    { "Text": "Which U.S. president made the first presidential radio broadcast?", "GenreId": "3" },
-    { "Text": "Marie Antoinette was born an Archduchess of what country?", "GenreId": "3" },
-    { "Text": "In 1867 the United States purchased Alaska from what country?", "GenreId": "3" }
+    { "Text": "What was used for blood in the movie \"Psycho\"?", "GenreId": "3" },
+    { "Text": "In the Movie \"Christine\", what kind of car was she?", "GenreId": "3" },
+    { "Text": "Who was the father of Rosemary's Baby?", "GenreId": "3" },
+    { "Text": "What horror movie featured a gourmet cannibal?", "GenreId": "3" },
+    { "Text": "What famous villian stalks children in their dreams?", "GenreId": "3" }
 ]
